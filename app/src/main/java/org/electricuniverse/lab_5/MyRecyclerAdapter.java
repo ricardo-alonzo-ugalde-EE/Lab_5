@@ -23,8 +23,8 @@ import java.util.Map;
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> implements Filterable {
     private List<Map<String, ?>> md;    // list of all the movies
     private List<Map<String, ?>> md_filtered;    //list of all the filtered movies
-    private OnListItemClickListener onListItemClickListener = null;     //call back to the activity
-    ListFragment.onItemSelectedListener clickListener;
+    private ListFragment.OnItemSelectedListener onListItemClickListener = null;     //call back to the activity
+   // ListFragment.onItemSelectedListener clickListener;
 
     public MyRecyclerAdapter(List<Map<String, ?>> list)     //constructor
     {
@@ -91,7 +91,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         return md_filtered.get(i);
     }
 
-    public void setOnItemClickListener(OnListItemClickListener listener) {
+    public void setOnItemClickListener(ListFragment.OnItemSelectedListener listener) {
         onListItemClickListener = listener;
     }
 
@@ -102,28 +102,32 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
      * hierarchy.
      */
     @Override
-    public MyRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler, parent, false);
         final ViewHolder view_holder = new ViewHolder(v);
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onListItemClickListener != null) {
-                    onListItemClickListener.onItemClick(v, view_holder.getAdapterPosition());
-                }
-            }
-        });
-        v.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (onListItemClickListener != null) {
-                    onListItemClickListener.onItemLongClick(v, view_holder.getAdapterPosition());
-
-                }
-                return true;
-            }
-        });
         return view_holder;
+
+//        v.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v) {
+//                if (onListItemClickListener != null) {
+//                    onListItemClickListener.onListItemSelected(v,Integer.toString(md_filtered.get()));
+//                }
+//            }
+//        });
+////        v.setOnLongClickListener(new View.OnLongClickListener() {
+////            @Override
+////            public boolean onLongClick(View v) {
+////                if (onListItemClickListener != null) {
+////                    onListItemClickListener.onItemLongClick(v, view_holder.getAdapterPosition());
+////
+////                }
+////                return true;
+////            }
+////        });
+//        return view_holder;
     }
 
 
@@ -143,9 +147,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             @Override
             public void onClick(View view)
             {
-                if(clickListener != null)
+                if(onListItemClickListener != null)
                 {
-                    clickListener.onListItemSelected(view, Integer.parseInt(md_filtered.get(position).get("image").toString()),
+                    onListItemClickListener.onListItemSelected(view, Integer.parseInt(md_filtered.get(position).get("image").toString()),
                             md_filtered.get(position).get("name").toString(), md_filtered.get(position).get("year").toString());
                 }
             }

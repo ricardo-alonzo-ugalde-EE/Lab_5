@@ -21,11 +21,11 @@ import android.widget.AdapterView;
  * */
 public class ListFragment extends Fragment
 {
-    public interface onItemSelectedListener
+    public interface OnItemSelectedListener
     {
         public void onListItemSelected(View sharedView, int imageResourceID, String title, String year);
     }
-    onItemSelectedListener clickListener;
+    OnItemSelectedListener clickListener;
     private MovieData md = new MovieData();
     private final MyRecyclerAdapter myRecyclerAdapter = new MyRecyclerAdapter(md.getMoviesList());
 
@@ -51,8 +51,8 @@ public class ListFragment extends Fragment
         super.onAttach(context);
         try
         {
-            clickListener = (onItemSelectedListener)context;
-            myRecyclerAdapter.setOnItemClickListener((OnListItemClickListener) clickListener);
+            clickListener = (OnItemSelectedListener)context;
+           myRecyclerAdapter.setOnItemClickListener(clickListener);
         }
         catch (ClassCastException ex)
         {

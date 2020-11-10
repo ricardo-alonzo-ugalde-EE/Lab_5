@@ -19,14 +19,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 
-public class newActivity extends AppCompatActivity implements ListFragment.onItemSelectedListener
+public class newActivity extends AppCompatActivity implements ListFragment.OnItemSelectedListener
 {
     private boolean twoPane;
     @Override
     protected void onCreate( Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_new);
         if(savedInstanceState ==null)
         {
             getSupportFragmentManager().beginTransaction()
@@ -49,6 +49,7 @@ public class newActivity extends AppCompatActivity implements ListFragment.onIte
         args.putString("myear",year);
         Fragment detailFragment = new DetailFragment();
         detailFragment.setArguments(args);
+
         if (twoPane)
         {
             detailFragment.setEnterTransition(new Slide(Gravity.TOP));
